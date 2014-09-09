@@ -9,7 +9,6 @@ public class Percolation {
     private WeightedQuickUnionUF uf;
     private boolean[] opens;
     private int rowSize;
-    private int opendBlocks;
 
     public Percolation(int N) {
         rowSize = N;
@@ -27,9 +26,7 @@ public class Percolation {
     }
 
     public void open(int i, int j) {
-        if (isOpen(i, j)) {
-            return;
-        } else {
+        if (!isOpen(i, j)) {
             int index = getIndex(i, j);
             opens[index] = true;
             List<Integer> adjacent = getAdjacentIndexs(i, j);
@@ -38,7 +35,6 @@ public class Percolation {
                     uf.union(index, adjacentIndex);
                 }
             }
-            opendBlocks ++;
         }
     }
 
@@ -58,8 +54,8 @@ public class Percolation {
     }
 
     private Set<Integer> getPercolateIdSet() {
-        Set<Integer> upIdSet = new HashSet<>();
-        Set<Integer> bottomIdSet = new HashSet<>();
+        Set<Integer> upIdSet = new HashSet<Integer>();
+        Set<Integer> bottomIdSet = new HashSet<Integer>();
         for (int i = 0; i < rowSize; i++) {
             upIdSet.add(uf.find(i));
         }
@@ -76,7 +72,7 @@ public class Percolation {
     }
 
     private List<Integer> getAdjacentIndexs(int i, int j) {
-        List<Integer> adjacentIndexs = new ArrayList<>();
+        List<Integer> adjacentIndexs = new ArrayList<Integer>();
         int index = getIndex(i, j);
         int leftIndex = index - 1;
         int rightIndex = index + 1;
@@ -106,11 +102,9 @@ public class Percolation {
         p.open(4, 1);
         p.open(5, 1);
         p.open(2, 1);
+        p.open(4, 4);
         System.out.println(p.percolates());
-        System.out.println(p.isFull(2, 1));
+        System.out.println(p.isFull(4, 4));
     }
 
-    public int getOpendBlocks() {
-        return opendBlocks;
-    }
 }

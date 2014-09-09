@@ -5,8 +5,8 @@
  */
 public class PercolationStats {
     // perform T independent computational experiments on an N-by-N grid
-    double[] result;
-    int passTimes;
+    private double[] result;
+    private int passTimes;
 
 
     public PercolationStats(int N, int T){
@@ -30,10 +30,16 @@ public class PercolationStats {
 
     private double onePass(int N){
         Percolation p = new Percolation(N);
+        double count = 0.0;
         while(!p.percolates()){
-            p.open(StdRandom.uniform(1,N+1),StdRandom.uniform(1,N+1));
+            int x = StdRandom.uniform(1, N + 1);
+            int y = StdRandom.uniform(1, N + 1);
+            if (!p.isOpen(x, y)) {
+                p.open(x, y);
+                count++;
+            }
         }
-        return p.getOpendBlocks()*1.00/(N*N);
+        return count * 1.00 / (N * N);
     }
 
     public double stddev(){
@@ -55,11 +61,6 @@ public class PercolationStats {
         return v;
     }
 
-    public void printResult(){
-        System.out.printf("mean                     = %f\n", mean());
-        System.out.printf("stddev                   = %f\n", stddev());
-        System.out.printf("95%% confidence interval  = %f, %f\n", confidenceLo(), confidenceHi());
-    }
 
     public static void main(String[] args) {
         int N = Integer.parseInt(args[0]);
@@ -67,7 +68,6 @@ public class PercolationStats {
 
         for (int i = 1; i< 10; i++) {
             PercolationStats p = new PercolationStats(N,T);
-            p.printResult();
         }
     }
 }
