@@ -44,21 +44,26 @@ public class Percolation {
     }
 
     public boolean isFull(int i, int j) {
-        int index = getIndex(i, j);
-        int id = uf.find(index);
-        if (percolates()) {
-            Set<Integer> percolateHashSet = getPercolateIdSet();
+        if (isOpen(i, j)) {
+            int index = getIndex(i, j);
+            int id = uf.find(index);
+            Set<Integer> percolateHashSet = getUpRowIdSet();
             return percolateHashSet.contains(id);
         }
         return false;
     }
 
-    private Set<Integer> getPercolateIdSet() {
+    private Set<Integer> getUpRowIdSet() {
         Set<Integer> upIdSet = new HashSet<Integer>();
-        Set<Integer> bottomIdSet = new HashSet<Integer>();
         for (int i = 0; i < rowSize; i++) {
             upIdSet.add(uf.find(i));
         }
+        return upIdSet;
+    }
+
+    private Set<Integer> getPercolateIdSet() {
+        Set<Integer> upIdSet = getUpRowIdSet();
+        Set<Integer> bottomIdSet = new HashSet<Integer>();
         for (int i = (rowSize - 1) * rowSize; i < rowSize * rowSize; i++) {
             bottomIdSet.add(uf.find(i));
         }
