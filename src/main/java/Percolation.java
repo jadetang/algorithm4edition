@@ -9,14 +9,23 @@ public class Percolation {
     private WeightedQuickUnionUF uf;
     private boolean[] opens;
     private int rowSize;
+    private int TOP_VIRTUAL_INDEX;
+    private int BOTTOM_VIRTUAL_INDEX;
 
     public Percolation(int N) {
+        if ( N <= 0 ){
+            throw new IllegalArgumentException();
+        }
         rowSize = N;
-        uf = new WeightedQuickUnionUF(rowSize * rowSize);
-        opens = new boolean[rowSize * rowSize];
+        TOP_VIRTUAL_INDEX = rowSize*rowSize;
+        BOTTOM_VIRTUAL_INDEX = rowSize*rowSize+1;
+        uf = new WeightedQuickUnionUF(rowSize * rowSize+2);
+        opens = new boolean[rowSize * rowSize+2];
         for (int i = 0; i < opens.length; i++) {
             opens[i] = false;
         }
+        opens[TOP_VIRTUAL_INDEX] = true;
+        opens[BOTTOM_VIRTUAL_INDEX] = true;
     }
 
 
@@ -39,36 +48,28 @@ public class Percolation {
     }
 
     public boolean percolates() {
-        Set<Integer> upIdSet = getPercolateIdSet();
-        return (!upIdSet.isEmpty()) && (upIdSet.size() == 1);
+        return uf.connected(TOP_VIRTUAL_INDEX,BOTTOM_VIRTUAL_INDEX);
     }
 
+
+
+
+
     public boolean isFull(int i, int j) {
-        int index = getIndex(i, j);
-        int id = uf.find(index);
-        if (percolates()) {
-            Set<Integer> percolateHashSet = getPercolateIdSet();
-            return percolateHashSet.contains(id);
+        if(isOpen(i,j)){
+            int index = getIndex(i, j);
+            return uf.connected(index,TOP_VIRTUAL_INDEX);
         }
         return false;
     }
 
-    private Set<Integer> getPercolateIdSet() {
-        Set<Integer> upIdSet = new HashSet<Integer>();
-        Set<Integer> bottomIdSet = new HashSet<Integer>();
-        for (int i = 0; i < rowSize; i++) {
-            upIdSet.add(uf.find(i));
-        }
-        for (int i = (rowSize - 1) * rowSize; i < rowSize * rowSize; i++) {
-            bottomIdSet.add(uf.find(i));
-        }
-        upIdSet.retainAll(bottomIdSet);
-        return upIdSet;
-    }
-
-
     private int getIndex(int i, int j) {
-        return (i - 1) * rowSize + (j - 1);
+
+        if( i> rowSize || j > rowSize || i < 1 || j < 1){
+            throw new IndexOutOfBoundsException();
+        }
+        int index  = (i - 1) * rowSize + (j - 1);
+        return index;
     }
 
     private List<Integer> getAdjacentIndexs(int i, int j) {
@@ -87,9 +88,13 @@ public class Percolation {
         }
         if (index >= rowSize) {
             adjacentIndexs.add(upIndex);
+        }else {
+            adjacentIndexs.add(TOP_VIRTUAL_INDEX);
         }
         if (index < (rowSize - 1) * rowSize) {
             adjacentIndexs.add(bottomIndex);
+        }else {
+            adjacentIndexs.add(BOTTOM_VIRTUAL_INDEX);
         }
         return adjacentIndexs;
     }
@@ -101,10 +106,9 @@ public class Percolation {
         p.open(3, 1);
         p.open(4, 1);
         p.open(5, 1);
-        p.open(2, 1);
-        p.open(4, 4);
         System.out.println(p.percolates());
         System.out.println(p.isFull(4, 4));
+
     }
 
 }
