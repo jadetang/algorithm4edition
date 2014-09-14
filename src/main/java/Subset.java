@@ -4,14 +4,12 @@
 
 public class Subset {
     public static void main(String[] args) {
-        int k = Integer.parseInt(args[0]);
+        //int k = Integer.parseInt(args[0]);
+        int k  = 3;
         RandomizedQueue<String> queue = new RandomizedQueue<>();
-        while (StdIn.isEmpty()) {
-            String s = StdIn.readString();
-            queue.enqueue(s);
-        }
-        for (int i = 0; i < k; i++) {
-            System.out.println(queue.dequeue());
+        while(!StdIn.isEmpty()){
+            int x = StdIn.readInt();
+            System.out.println(x);
         }
 
     }
