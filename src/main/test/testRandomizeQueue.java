@@ -41,4 +41,65 @@ public class testRandomizeQueue {
             System.out.println(i);
         }
     }
+
+
+    @Test
+    public void testFunc() throws Exception{
+        for (int i = 0; i < 10; i++) {
+            randomizedQueue.enqueue(i);
+        }
+    }
+
+    @Test
+    public void testDequeueManyTimes() throws Exception{
+        for (int i = 0; i < 1000000; i++) {
+            int number = StdRandom.uniform(2000);
+            randomizedQueue.enqueue(number);
+            Assert.assertEquals(new Integer(number), randomizedQueue.dequeue());
+        }
+    }
+
+    @Test
+    public void testResize() throws Exception{
+        for (int i = 0; i < 10000000; i++) {
+            randomizedQueue.enqueue(i);
+        }
+    }
+
+    @Test
+    public void testEnqeueAndDeque() throws Exception{
+        for (int i = 0; i < 10000000; i++){
+            if( StdRandom.uniform(0,10) < 9){
+                randomizedQueue.enqueue(i);
+            }else{
+                randomizedQueue.dequeue();
+            }
+        }
+    }
+
+    @Test
+    public void testShrink() throws Exception{
+        for (int i = 0; i < 100 ; i++) {
+            randomizedQueue.enqueue(i);
+        }
+        for (int i = 0; i < 75; i++) {
+            randomizedQueue.dequeue();
+        }
+    }
+
+
+    @Test
+    public void testGoBackToEmpty() throws Exception{
+        for (int i = 0; i < 10; i++) {
+            randomizedQueue.enqueue(i);
+        }
+        for (int i = 0; i < 10; i++) {
+            randomizedQueue.dequeue();
+        }
+        Assert.assertEquals(true,randomizedQueue.isEmpty());
+        randomizedQueue.enqueue(10);
+        Assert.assertEquals(false, randomizedQueue.isEmpty());
+        Assert.assertEquals(new Integer(10),randomizedQueue.dequeue());
+        Assert.assertEquals(true, randomizedQueue.isEmpty());
+    }
 }
