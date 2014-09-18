@@ -68,6 +68,7 @@ public class testRandomizeQueue {
 
     @Test
     public void testEnqeueAndDeque() throws Exception{
+        Stopwatch watch = new Stopwatch();
         for (int i = 0; i < 10000000; i++){
             if( StdRandom.uniform(0,10) < 9){
                 randomizedQueue.enqueue(i);
@@ -75,6 +76,7 @@ public class testRandomizeQueue {
                 randomizedQueue.dequeue();
             }
         }
+        System.out.println("take time: "+ watch.elapsedTime());
     }
 
     @Test
@@ -90,11 +92,11 @@ public class testRandomizeQueue {
 
     @Test
     public void testGoBackToEmpty() throws Exception{
-        for (int i = 0; i < 10; i++) {
-            randomizedQueue.enqueue(i);
-        }
-        for (int i = 0; i < 10; i++) {
-            randomizedQueue.dequeue();
+        int enQueueDeQueueTimes = StdRandom.uniform(1,1000);
+        for (int i = 0; i < enQueueDeQueueTimes; i++) {
+            int enqeueNumber = StdRandom.uniform(1,10000);
+            randomizedQueue.enqueue(enqeueNumber);
+            Assert.assertEquals(new Integer(enqeueNumber),randomizedQueue.dequeue());
         }
         Assert.assertEquals(true,randomizedQueue.isEmpty());
         randomizedQueue.enqueue(10);
