@@ -51,4 +51,11 @@ public class testDeque {
         deque.removeLast();
         Assert.assertEquals(0, deque.size());
     }
+
+    @Test
+    public void test() {
+        for (int i = 1; i < 1; i++) {
+            System.out.println(i);
+        }
+    }
 }
