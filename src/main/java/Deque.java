@@ -16,8 +16,8 @@ public class Deque<Item> implements Iterable<Item> {
 
     public Deque() {
         size = 0;
-        head = new Node();
-        tail = new Node();
+       // head = new Node();
+      //  tail = new Node();
     }
 
     public boolean isEmpty() {
@@ -34,10 +34,17 @@ public class Deque<Item> implements Iterable<Item> {
             head = new Node(item);
             tail = head;
         } else {
-            Node oldHead = head;
-            head = new Node(item);
-            head.next = oldHead;
-            oldHead.before = head;
+            if(size == 1){
+                head = new Node(item);
+                head.next = tail;
+                tail.before = head;
+            }
+            else{
+                Node oldHead = head;
+                head = new Node(item);
+                head.next = oldHead;
+                oldHead.before = head;
+            }
 
         }
         size++;
@@ -50,9 +57,17 @@ public class Deque<Item> implements Iterable<Item> {
             head = new Node(item);
             tail = head;
         } else {
-            Node oldTail = tail;
-            tail = new Node(item);
-            tail.before = oldTail;
+            if( size == 1){
+                tail = new Node(item);
+                head.next = tail;
+                tail.before = head;
+            }
+            else{
+                Node oldTail = tail;
+                tail = new Node(item);
+                tail.before = oldTail;
+                oldTail.next = tail;
+            }
         }
         size++;
     }
@@ -91,7 +106,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     @Override
     public Iterator<Item> iterator() {
-        return new LinkedIterator<Item>();
+        return new LinkedIterator();
     }
 
 
@@ -125,6 +140,9 @@ public class Deque<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
+            if(!hasNext()){
+                throw new NoSuchElementException();
+            }
             Item result = (Item) iteratorHead.value;
             iteratorHead = iteratorHead.next;
             return result;

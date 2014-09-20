@@ -2,12 +2,12 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-/**
- * Created by jadetang on 14-9-13.
- */
+ /*Created by jadetang on 14-9-13.*/
+
+
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
-    private static final int DEFAULT_SIZE = 100;
+    private static final int DEFAULT_SIZE = 8;
     private Item[] array;
     private int size;
 
@@ -33,7 +33,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             throw new NullPointerException();
         }
         if (size < array.length) {
-            array[++size] = item;
+            array[size++] = item;
         }
         if (isFull()) {
             resize(array, 2 * array.length);
@@ -57,12 +57,15 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             throw new java.util.NoSuchElementException();
         }
         Integer index = null;
-        while (result == null) {
-            index = StdRandom.uniform(size + 1);
+        while (result == null ) {
+            index = StdRandom.uniform(array.length);
             result = array[index];
         }
         array[index] = null;
         size--;
+        if( size <= array.length / 4 ){
+            resize(array,array.length/2 );
+        }
         return result;
     }
 
@@ -85,7 +88,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private class RandomIterator<Item> implements Iterator<Item> {
 
-        private Set<Integer> outPutIndex = new HashSet<>();
+        private Set<Integer> outPutIndex = new HashSet<Integer>();
         private int count = 0;
 
         @Override
