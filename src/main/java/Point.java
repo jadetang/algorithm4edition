@@ -15,7 +15,7 @@ import java.util.Comparator;
 public class Point implements Comparable<Point> {
 
     // compare points by slope
-    public final Comparator<Point> SLOPE_ORDER = new BySlopeOrder();       // YOUR DEFINITION HERE
+    public final Comparator<Point> SLOPE_ORDER = new BySlopeOrder(this);       // YOUR DEFINITION HERE
 
     private final int x;                              // x coordinate
     private final int y;                              // y coordinate
@@ -50,7 +50,7 @@ public class Point implements Comparable<Point> {
         if (this.x == that.x) {
             return Double.POSITIVE_INFINITY;
         }
-        return (that.y - this.y) / (that.x - this.x);
+        return (double) (that.y - this.y) / (double) (that.x - this.x);
 
     }
 
@@ -65,10 +65,10 @@ public class Point implements Comparable<Point> {
         if (this.y < that.y) {
             return -1;
         }
-        if (this.x > this.y) {
+        if (this.x > that.x) {
             return 1;
         }
-        if (this.x < this.y) {
+        if (this.x < that.x) {
             return -1;
         }
         return 0;
@@ -86,10 +86,17 @@ public class Point implements Comparable<Point> {
     }
 
     private class BySlopeOrder implements Comparator<Point> {
+        private Point p;
+
+        private BySlopeOrder(Point point) {
+            this.p = point;
+        }
+
+
         @Override
         public int compare(Point o1, Point o2) {
-            Double slope1 = Point.this.slopeTo(o1);
-            Double slope2 = Point.this.slopeTo(o2);
+            Double slope1 = p.slopeTo(o1);
+            Double slope2 = p.slopeTo(o2);
             return slope1.compareTo(slope2);
         }
     }
