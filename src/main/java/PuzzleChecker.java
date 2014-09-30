@@ -28,7 +28,7 @@
 public class PuzzleChecker {
 
     public static void main(String[] args) {
-
+        args = new String[]{"8puzzle/puzzle07.txt"};
         // for each command-line argument
         for (String filename : args) {
 
@@ -45,7 +45,13 @@ public class PuzzleChecker {
             // solve the slider puzzle
             Board initial = new Board(tiles);
             Solver solver = new Solver(initial);
-            System.out.println(filename + ": " + solver.moves());
+            if (!solver.isSolvable())
+                StdOut.println("No solution possible");
+            else {
+                StdOut.println("Minimum number of moves = " + solver.moves());
+                for (Board board : solver.solution())
+                    StdOut.println(board);
+            }
         }
     }
 }
