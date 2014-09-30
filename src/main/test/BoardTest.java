@@ -3,7 +3,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author tangsicheng
@@ -13,15 +12,18 @@ import java.util.List;
 public class BoardTest {
 
     private int[][] blocks = new int[][]{{8, 1, 3}, {4, 0, 2}, {7, 6, 5}};
-    private int[][] anotherBlocks = new int[][]{{8,0,3},{4,1,2},{7,6,5}};
+    private int[][] anotherBlocks = new int[][]{{8, 0, 3}, {4, 1, 2}, {7, 6, 5}};
+    private int[][] alreadyBlocks = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 0}};
     private Board b;
     private Board b2;
+    private Board alreadyB;
 
 
     @Before
     public void setUp() throws Exception {
         b = new Board(blocks);
         b2 = new Board(anotherBlocks);
+        alreadyB = new Board(alreadyBlocks);
     }
 
 
@@ -43,8 +45,8 @@ public class BoardTest {
 
     @Test
     public void testTwin() throws Exception {
-        Board twin = b.twin();
-        System.out.println(b);
+        Board twin = alreadyB.twin();
+        System.out.println(alreadyB);
         System.out.println(twin);
     }
 
@@ -53,7 +55,7 @@ public class BoardTest {
         Iterable<Board> list = b2.neighbors();
         Iterator<Board> it = list.iterator();
         System.out.println(b2);
-        while(it.hasNext()){
+        while (it.hasNext()) {
             System.out.println(it.next());
         }
     }
@@ -64,9 +66,21 @@ public class BoardTest {
         Iterable<Board> list = b.neighbors();
         Iterator<Board> it = list.iterator();
         System.out.println(b);
-        while(it.hasNext()){
+        while (it.hasNext()) {
             System.out.println(it.next());
         }
     }
 
+    @Test
+    public void testAlreadyBoardNeighbors() throws Exception {
+        Iterable<Board> list = alreadyB.neighbors();
+        Iterator<Board> it = list.iterator();
+        System.out.println(alreadyB);
+        while (it.hasNext()) {
+            Board b = it.next();
+            System.out.println(b);
+            System.out.println(b.hamming());
+
+        }
+    }
 }

@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +12,6 @@ public class Board {
 
     private Board targetBoard;
 
-    private Board previousBoard;
 
     private int N;
 
@@ -30,17 +28,28 @@ public class Board {
     }
 
 
+    private Board getTargetBoard(int N) {
+        int[][] blocks = new int[N][N];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                blocks[i][j] = i * N + j + 1;
+            }
+        }
+        blocks[N - 1][N - 1] = 0;
+        return new Board(blocks);
+    }
+
     public Board(int[][] blocks) {
         this.blocks = blocks;
         this.N = blocks.length;
-        targetBoard = new Board(blocks.length);
+        targetBoard = new Board(this.N);
     }
 
     public Board twin() {
         int[][] copyArray = copyTwoDimArray(this.blocks);
+        outer:
         for (int i = 0; i < copyArray.length; i++) {
             int[] row = copyArray[i];
-            outer:
             for (int j = 0; j < row.length - 1; j++) {
                 if (row[j] != 0 && row[j + 1] != 0) {
                     exec(row, j, j + 1);
@@ -163,17 +172,11 @@ public class Board {
             }
         }
         for (int i = -1; i < 2; i += 2) {
-            if (notOutArray(zeroI + i) ) {
+            if (notOutArray(zeroI + i)) {
                 int[][] copy = copyTwoDimArray(this.blocks);
                 exceInTwoDimArray(copy, zeroI, zeroJ, zeroI + i, zeroJ);
                 Board b = new Board(copy);
-                if (this.previousBoard != null) {
-                    if (!this.previousBoard.equals(b)) {
-                        result.add(b);
-                    }
-                }else{
-                    result.add(b);
-                }
+                result.add(b);
             }
         }
         for (int i = -1; i < 2; i += 2) {
@@ -181,13 +184,7 @@ public class Board {
                 int[][] copy = copyTwoDimArray(this.blocks);
                 exceInTwoDimArray(copy, zeroI, zeroJ, zeroI, zeroJ + i);
                 Board b = new Board(copy);
-                if (this.previousBoard != null) {
-                    if (!this.previousBoard.equals(b)  ) {
-                        result.add(b);
-                    }
-                }else{
-                    result.add(b);
-                }
+                result.add(b);
             }
         }
         return result;
