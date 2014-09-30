@@ -56,19 +56,6 @@ public class Solver {
     }
 
     public Iterable<Board> solution() {
-        /*if (!completed) {
-            List<Board> initialSolutionMoves = findSolution(initialBoard);
-            List<Board> twinSolutionMoves  = findSolution(initialBoard.twin());
-            if (initialSolutionMoves.size() > twinSolutionMoves.size()){
-                solvable = false;
-                completed = true;
-                return null;
-            }else{
-                solvable = true;
-                completed = true;;
-                return (Iterable<Board>) initialSolutionMoves;
-            }
-        }*/
         return solutionMoves;
     }
 
