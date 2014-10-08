@@ -188,52 +188,43 @@ public class KdTree {
         if (p == null) return null;
         if (root == null ) return null;
         Double closetDistance = root.p.distanceSquaredTo(p);
-        return nearest( root, p, closetDistance,root.p );
+        return nearest(root, p, root.p,closetDistance);
     }
 
-    private Point2D nearest(Node x, Point2D p,double closestDistance,Point2D closedPoint) {
+    private Point2D nearest(Node x, Point2D p, Point2D lastNearestP, Double closestDistance) {
         if (x == null) {
-            return null;
+            return lastNearestP;
         }
         Double currentDistance = x.p.distanceSquaredTo(p);
         if (currentDistance < closestDistance) {
+            lastNearestP = x.p;
             closestDistance = currentDistance;
-            closedPoint = x.p;
         }
         Point2D leftNearestP = null;
         Point2D rightNearestP = null;
-
-        if(x.lb != null && x.rt != null){
-
-        }
-
-
-
-
-
-
-
-
         if (x.lb != null) {
             Double rectDistance = x.lb.rect.distanceSquaredTo(p);
             if (rectDistance < closestDistance) {
-                leftNearestP = nearest(x.lb, p,closestDistance,closedPoint);
+                leftNearestP = nearest(x.lb, p, lastNearestP,closestDistance);
             }
-        }
-        if(leftNearestP != null ){
-            closestDistance = leftNearestP.distanceTo(p);
-            closedPoint = leftNearestP;
         }
         if (x.rt != null) {
             Double rectDistance = x.rt.rect.distanceSquaredTo(p);
             if (rectDistance < closestDistance) {
-                rightNearestP = nearest(x.rt, p,closestDistance,closedPoint);
+                rightNearestP = nearest(x.rt, p, lastNearestP,closestDistance);
             }
         }
-        if(rightNearestP !=null ){
-            closedPoint = rightNearestP;
+        Double leftClosetDistance = leftNearestP == null ? Double.MAX_VALUE : p.distanceSquaredTo(leftNearestP);
+        Double rightClosetDistance = rightNearestP == null ? Double.MAX_VALUE : p.distanceSquaredTo(rightNearestP);
+        if( leftClosetDistance <  closestDistance ){
+            closestDistance = leftClosetDistance;
+            lastNearestP = leftNearestP;
         }
-        return closedPoint;
+        if( rightClosetDistance < closestDistance ){
+            closestDistance = rightClosetDistance;
+            lastNearestP = rightNearestP;
+        }
+        return lastNearestP;
     }
 
 

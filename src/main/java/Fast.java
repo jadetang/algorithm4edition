@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class Fast {
     public static void main(String[] args) {
         //String fileName = args[0];
-        String fileName = "collinear/input8.txt";
+        String fileName = "collinear/input6.txt";
 
         In in = new In(fileName);
 
@@ -21,14 +21,6 @@ public class Fast {
         }
         Arrays.sort(points);
         Arrays.sort(points, points[0].SLOPE_ORDER);
-
-
-        Point[] copy = Arrays.copyOfRange(points, 1, points.length);
-        Arrays.sort(copy, copy[0].SLOPE_ORDER);
-
-        System.out.println("-------");
-
-
         for (int i = 0; i < points.length; i++) {
             probeAndPrint(points, i, 4);
         }
