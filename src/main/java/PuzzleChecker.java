@@ -28,7 +28,8 @@
 public class PuzzleChecker {
 
     public static void main(String[] args) {
-        args = new String[]{"8puzzle/puzzle07.txt"};
+        args = new String[]{"8puzzle/puzzle09.txt"};
+
         // for each command-line argument
         for (String filename : args) {
 
