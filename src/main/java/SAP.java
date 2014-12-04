@@ -9,31 +9,27 @@ public class SAP {
     // constructor takes a digraph (not necessarily a DAG)
     private Digraph digraph;
 
+
+
     public SAP(Digraph G) {
-        digraph = G;
+        digraph  = new Digraph(G.V());
+        for (int i = 0; i < G.V(); i++) {
+            Iterator<Integer> it = G.adj(i).iterator();
+            while(it.hasNext()){
+                digraph.addEdge(i,it.next());
+            }
+        }
     }
 
     // length of shortest ancestral path between v and w; -1 if no such path
     public int length(int v, int w) {
         BreadthFirstDirectedPaths bfsa = new BreadthFirstDirectedPaths(digraph, v);
-        //BreadthFirstDirectedPaths bfab = new BreadthFirstDirectedPaths(digraph,w);
+        BreadthFirstDirectedPaths bfab = new BreadthFirstDirectedPaths(digraph,w);
         int distance = Integer.MAX_VALUE;
-        if (bfsa.hasPathTo(w)) {
-            distance = bfsa.distTo(w);
-        }
-        Queue<Integer> q = new Queue<Integer>();
-        q.enqueue(w);
-        int distTo = 0;
-        while (!q.isEmpty()) {
-            int tempV = q.dequeue();
-            distTo++;
-            for (int vert : digraph.adj(tempV)) {
-                q.enqueue(vert);
-                if (bfsa.hasPathTo(vert)) {
-                    distance = Math.min(distance, distTo + bfsa.distTo(vert));
-                }
+        for (int i = 0; i < digraph.V(); i++) {
+            if(bfsa.hasPathTo(i)&&bfab.hasPathTo(i)){
+                distance = Math.min(distance,bfsa.distTo(i)+bfab.distTo(i));
             }
-
         }
         if (distance == Integer.MAX_VALUE) {
             return -1;
@@ -44,37 +40,26 @@ public class SAP {
     // a common ancestor of v and w that participates in a shortest ancestral path; -1 if no such path
     public int ancestor(int v, int w) {
         BreadthFirstDirectedPaths bfsa = new BreadthFirstDirectedPaths(digraph, v);
-        //BreadthFirstDirectedPaths bfab = new BreadthFirstDirectedPaths(digraph,w);
+        BreadthFirstDirectedPaths bfab = new BreadthFirstDirectedPaths(digraph,w);
         int distance = Integer.MAX_VALUE;
         int ancestor = -1;
-        if (bfsa.hasPathTo(w)) {
-            distance = bfsa.distTo(w);
-            ancestor = w;
-        }
-        Queue<Integer> q = new Queue<Integer>();
-        q.enqueue(w);
-        int distTo = 0;
-        while (!q.isEmpty()) {
-            int tempV = q.dequeue();
-            distTo++;
-            for (int vert : digraph.adj(tempV)) {
-                q.enqueue(vert);
-                if (bfsa.hasPathTo(vert)) {
-                    int tempDistance = distTo + bfsa.distTo(vert);
-                    if (distance > tempDistance) {
-                        distance = tempDistance;
-                        ancestor = vert;
-                    }
+        for (int i = 0; i < digraph.V(); i++) {
+            if(bfsa.hasPathTo(i)&&bfab.hasPathTo(i)){
+               // distance = Math.min(distance,bfsa.distTo(i)+bfab.distTo(i));
+                int tempDistance = bfsa.distTo(i)+bfab.distTo(i);
+                if(tempDistance<distance){
+                    distance = tempDistance;
+                    ancestor = i;
                 }
             }
-
+        }
+        if (distance == Integer.MAX_VALUE) {
+            return -1;
         }
         return ancestor;
     }
 
     public int length(Iterable<Integer> v, Iterable<Integer> w){
-
-
 
 
         Iterator<Integer> itv = v.iterator();
