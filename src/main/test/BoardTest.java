@@ -14,9 +14,12 @@ public class BoardTest {
     private int[][] blocks = new int[][]{{8, 1, 3}, {4, 0, 2}, {7, 6, 5}};
     private int[][] anotherBlocks = new int[][]{{8, 0, 3}, {4, 1, 2}, {7, 6, 5}};
     private int[][] alreadyBlocks = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 0}};
+    private int[][] notGoalBlocks = new int[][]{{1,0},{2,3}};
+
     private Board b;
     private Board b2;
     private Board alreadyB;
+    private Board notGoalb;
 
 
     @Before
@@ -24,6 +27,7 @@ public class BoardTest {
         b = new Board(blocks);
         b2 = new Board(anotherBlocks);
         alreadyB = new Board(alreadyBlocks);
+        notGoalb = new Board(notGoalBlocks);
     }
 
 
@@ -36,6 +40,12 @@ public class BoardTest {
     @Test
     public void testManhattan() throws Exception {
         Assert.assertEquals(10, b.manhattan());
+    }
+
+    @Test
+    public void testGoal() throws Exception {
+        Assert.assertTrue(alreadyB.isGoal());
+        Assert.assertFalse(notGoalb.isGoal());
     }
 
     @Test

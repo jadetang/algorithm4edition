@@ -10,7 +10,7 @@ import java.util.List;
 public class Board {
     private int[][] blocks;
 
-    private Board targetBoard;
+    private int manhattan;
 
 
     private int N;
@@ -40,9 +40,10 @@ public class Board {
     }
 
     public Board(int[][] blocks) {
-        this.blocks = blocks;
+        int[][] copyArray = copyTwoDimArray(blocks);
+        this.blocks = copyArray;
         this.N = blocks.length;
-        targetBoard = new Board(this.N);
+        this.manhattan = getManhattan();
     }
 
     public Board twin() {
@@ -90,7 +91,7 @@ public class Board {
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks.length; j++) {
                 if (blocks[i][j] != 0) {
-                    if (blocks[i][j] != targetBoard.blocks[i][j]) {
+                    if (blocks[i][j] !=  i* blocks.length+j+1) {
                         hamming++;
                     }
                 }
@@ -99,8 +100,11 @@ public class Board {
         }
         return hamming;
     }
-
     public int manhattan() {
+        return manhattan;
+    }
+
+    private int getManhattan() {
         int manhattan = 0;
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks.length; j++) {
@@ -125,7 +129,16 @@ public class Board {
     }
 
     public boolean isGoal() {
-        return this.equals(targetBoard);
+        for (int i = 0; i < this.blocks.length; i++) {
+            for (int j = 0; j < this.blocks.length; j++) {
+                if ( !(i == this.blocks.length - 1 && j == this.blocks.length - 1)){
+                    if (blocks[i][j] !=  i* blocks.length+j+1) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
 
@@ -134,6 +147,9 @@ public class Board {
         if (this == y) return true;
         if (y instanceof Board == false) return false;
         Board that = (Board) y;
+        if (dimension() != that.dimension()){
+            return false;
+        }
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks.length; j++) {
                 if (blocks[i][j] != that.blocks[i][j]) {

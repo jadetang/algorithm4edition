@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class Fast {
     public static void main(String[] args) {
         //String fileName = args[0];
-        String fileName = "collinear/input8.txt";
+        String fileName = "collinear/input6.txt";
 
         In in = new In(fileName);
 
@@ -19,31 +19,25 @@ public class Fast {
             points[count] = new Point(i, j);
             count++;
         }
-
         Arrays.sort(points);
-
+        Arrays.sort(points, points[0].SLOPE_ORDER);
         for (int i = 0; i < points.length; i++) {
-            Point[] temp = Arrays.copyOfRange(points, i, points.length);
-            Arrays.sort(temp);
-            Arrays.sort(temp, temp[0].SLOPE_ORDER);
-            probeAndPrint(temp, 0, 4);
+            probeAndPrint(points, i, 4);
         }
-
     }
 
     private static void probeAndPrint(Point[] points, int compareIndex, int minStep) {
         Point comparePoint = points[compareIndex];
-        for (int i = compareIndex; i < points.length - 3; ) {
-            int start = i;
-            int step = 3;
-            while (comparePoint.SLOPE_ORDER.compare(points[i + 1], points[i + 2]) == 0 && i < points.length - 3) {
+        for (int i = compareIndex + 1; i < points.length - 1; ) {
+            int temp = i;
+            int step = 2;
+            while (comparePoint.SLOPE_ORDER.compare(points[i], points[i + 1]) == 0 && (temp + step) < points.length) {
                 i++;
                 step++;
             }
             if (step >= minStep) {
-                printOneLine(points, start, start + step);
-                start += step;
-                i = start;
+                printOneLine(points, temp, temp + step);
+                i += step;
             } else {
                 i++;
             }
@@ -51,13 +45,9 @@ public class Fast {
     }
 
     private static void printOneLine(Point[] points, int beginIndex, int endIndexExclusive) {
-        Point[] temp = Arrays.copyOfRange(points, beginIndex, endIndexExclusive);
-
-        Arrays.sort(temp);
-
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < temp.length; i++) {
-            sb.append(temp[i] + " -> ");
+        for (int i = beginIndex; i < endIndexExclusive; i++) {
+            sb.append(points[i] + " -> ");
         }
         sb.replace(sb.lastIndexOf(" -> "), sb.length(), "");
         System.out.println(sb.toString());
