@@ -14,7 +14,7 @@ public class BoardTest {
     private int[][] blocks = new int[][]{{8, 1, 3}, {4, 0, 2}, {7, 6, 5}};
     private int[][] anotherBlocks = new int[][]{{8, 0, 3}, {4, 1, 2}, {7, 6, 5}};
     private int[][] alreadyBlocks = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 0}};
-    private int[][] notGoalBlocks = new int[][]{{1,0},{2,3}};
+    private int[][] notGoalBlocks = new int[][]{{1, 0}, {2, 3}};
 
     private Board b;
     private Board b2;

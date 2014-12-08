@@ -91,7 +91,7 @@ public class Board {
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks.length; j++) {
                 if (blocks[i][j] != 0) {
-                    if (blocks[i][j] !=  i* blocks.length+j+1) {
+                    if (blocks[i][j] != i * blocks.length + j + 1) {
                         hamming++;
                     }
                 }
@@ -100,6 +100,7 @@ public class Board {
         }
         return hamming;
     }
+
     public int manhattan() {
         return manhattan;
     }
@@ -131,8 +132,8 @@ public class Board {
     public boolean isGoal() {
         for (int i = 0; i < this.blocks.length; i++) {
             for (int j = 0; j < this.blocks.length; j++) {
-                if ( !(i == this.blocks.length - 1 && j == this.blocks.length - 1)){
-                    if (blocks[i][j] !=  i* blocks.length+j+1) {
+                if (!(i == this.blocks.length - 1 && j == this.blocks.length - 1)) {
+                    if (blocks[i][j] != i * blocks.length + j + 1) {
                         return false;
                     }
                 }
@@ -147,7 +148,7 @@ public class Board {
         if (this == y) return true;
         if (y instanceof Board == false) return false;
         Board that = (Board) y;
-        if (dimension() != that.dimension()){
+        if (dimension() != that.dimension()) {
             return false;
         }
         for (int i = 0; i < blocks.length; i++) {

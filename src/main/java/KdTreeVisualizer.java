@@ -1,12 +1,14 @@
-/*************************************************************************
- *  Compilation:  javac KdTreeVisualizer.java
- *  Execution:    java KdTreeVisualizer
- *  Dependencies: StdDraw.java Point2D.java KdTree.java
- *
- *  Add the points that the user clicks in the standard draw window
- *  to a kd-tree and draw the resulting kd-tree.
- *
- *************************************************************************/
+/**
+ * **********************************************************************
+ * Compilation:  javac KdTreeVisualizer.java
+ * Execution:    java KdTreeVisualizer
+ * Dependencies: StdDraw.java Point2D.java KdTree.java
+ * <p/>
+ * Add the points that the user clicks in the standard draw window
+ * to a kd-tree and draw the resulting kd-tree.
+ * <p/>
+ * ***********************************************************************
+ */
 
 public class KdTreeVisualizer {
 

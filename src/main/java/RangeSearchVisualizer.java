@@ -1,17 +1,19 @@
-/*************************************************************************
- *  Compilation:  javac RangeSearchVisualizer.java
- *  Execution:    java RangeSearchVisualizer input.txt
- *  Dependencies: PointSET.java KdTree.java Point2D.java RectHV.java
- *                StdDraw.java In.java
- *
- *  Read points from a file (specified as a command-line arugment) and
- *  draw to standard draw. Also draw all of the points in the rectangle
- *  the user selects by dragging the mouse.
- *
- *  The range search results using the brute-force algorithm are drawn
- *  in red; the results using the kd-tree algorithms are drawn in blue.
- *
- *************************************************************************/
+/**
+ * **********************************************************************
+ * Compilation:  javac RangeSearchVisualizer.java
+ * Execution:    java RangeSearchVisualizer input.txt
+ * Dependencies: PointSET.java KdTree.java Point2D.java RectHV.java
+ * StdDraw.java In.java
+ * <p/>
+ * Read points from a file (specified as a command-line arugment) and
+ * draw to standard draw. Also draw all of the points in the rectangle
+ * the user selects by dragging the mouse.
+ * <p/>
+ * The range search results using the brute-force algorithm are drawn
+ * in red; the results using the kd-tree algorithms are drawn in blue.
+ * <p/>
+ * ***********************************************************************
+ */
 
 public class RangeSearchVisualizer {
 

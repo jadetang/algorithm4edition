@@ -1,11 +1,13 @@
-/*************************************************************************
- *  Compilation:  javac BoggleBoard.java
- *  Execution:    java  BoggleBoard
- *  Dependencies: StdRandom.java In.java StdOut.java
- *
- *  A data type for Boggle boards.
- *
- *************************************************************************/
+/**
+ * **********************************************************************
+ * Compilation:  javac BoggleBoard.java
+ * Execution:    java  BoggleBoard
+ * Dependencies: StdRandom.java In.java StdOut.java
+ * <p/>
+ * A data type for Boggle boards.
+ * <p/>
+ * ***********************************************************************
+ */
 
 public class BoggleBoard {
     private final int M;        // number of rows
@@ -67,7 +69,7 @@ public class BoggleBoard {
         board = new char[M][N];
         for (int i = 0; i < M; i++) {
             for (int j = 0; j < N; j++) {
-                String letters = boggle1992[N*i+j];
+                String letters = boggle1992[N * i + j];
                 int r = StdRandom.uniform(letters.length());
                 board[i][j] = letters.charAt(r);
             }
@@ -76,6 +78,7 @@ public class BoggleBoard {
 
     /**
      * Initializes a board from the given filename.
+     *
      * @param filename the name of the file containing the Boggle board
      */
     public BoggleBoard(String filename) {
@@ -101,6 +104,7 @@ public class BoggleBoard {
     /**
      * Initializes a random M-by-N board, according to the frequency
      * of letters in the English language.
+     *
      * @param M the number of rows
      * @param N the number of columns
      */
@@ -119,6 +123,7 @@ public class BoggleBoard {
     /**
      * Initializes a board from the given 2d character array,
      * with 'Q' representing the two-letter sequence "Qu".
+     *
      * @param a the 2d character array
      */
     public BoggleBoard(char[][] a) {
@@ -138,23 +143,30 @@ public class BoggleBoard {
 
     /**
      * Returns the number of rows.
+     *
      * @return number of rows
      */
-    public int rows() { return M; }
+    public int rows() {
+        return M;
+    }
 
     /**
      * Returns the number of columns.
+     *
      * @return number of columns
      */
-    public int cols() { return N; }
+    public int cols() {
+        return N;
+    }
 
     /**
      * Returns the letter in row i and column j,
      * with 'Q' representing the two-letter sequence "Qu".
+     *
      * @param i the row
      * @param j the column
      * @return the letter in row i and column j
-     *    with 'Q' representing the two-letter sequence "Qu".
+     * with 'Q' representing the two-letter sequence "Qu".
      */
     public char getLetter(int i, int j) {
         return board[i][j];
@@ -162,6 +174,7 @@ public class BoggleBoard {
 
     /**
      * Returns a string representation of the board, replacing 'Q' with "Qu".
+     *
      * @return a string representation of the board, replacing 'Q' with "Qu"
      */
     public String toString() {
@@ -186,7 +199,7 @@ public class BoggleBoard {
         StdOut.println("Hasbro board:");
         BoggleBoard board1 = new BoggleBoard();
         StdOut.println(board1);
-        StdOut.println(board1.getLetter(0,0));
+        StdOut.println(board1.getLetter(0, 0));
         StdOut.println(board1.cols());
         StdOut.println();
 
@@ -198,11 +211,11 @@ public class BoggleBoard {
 
         // initialize a 4-by-4 board from a 2d char array
         StdOut.println("4-by-4 board from 2D character array:");
-        char[][] a =  {
-                { 'D', 'O', 'T', 'Y' },
-                { 'T', 'R', 'S', 'F' },
-                { 'M', 'X', 'M', 'O' },
-                { 'Z', 'A', 'B', 'W' }
+        char[][] a = {
+                {'D', 'O', 'T', 'Y'},
+                {'T', 'R', 'S', 'F'},
+                {'M', 'X', 'M', 'O'},
+                {'Z', 'A', 'B', 'W'}
         };
         BoggleBoard board3 = new BoggleBoard(a);
         StdOut.println(board3);

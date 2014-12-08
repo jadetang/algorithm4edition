@@ -24,7 +24,7 @@ public class Solver {
 
         completed = false;
 
-   //    findSolution(solutionMoves, initialBoard, "initial");
+        //    findSolution(solutionMoves, initialBoard, "initial");
 
         Thread thread1 = new Thread(new Runnable() {
             @Override
@@ -54,11 +54,10 @@ public class Solver {
         if (initialSolution) {
             solvable = true;
         }
-        if (twinSolution){
+        if (twinSolution) {
             solvable = false;
         }
     }
-
 
 
     public boolean isSolvable() {
@@ -102,7 +101,7 @@ public class Solver {
                 Board now = minPQ.delMin();
 
                 int priority = now.manhattan();
-                System.out.println("insert a board, priority "+ priority + "; "+now);
+                System.out.println("insert a board, priority " + priority + "; " + now);
                 moves.add(now);
                 if (now.isGoal()) {
                     if (whichBoard.equals("initial")) {
@@ -150,12 +149,10 @@ public class Solver {
     }
 
 
-
-
     private class HammingComparator implements Comparator<Board> {
         @Override
         public int compare(Board o1, Board o2) {
-            int move = Solver.this.solutionMoves.size() -1 ;
+            int move = Solver.this.solutionMoves.size() - 1;
             Integer hanmmingO1 = o1.hamming() + move;
             Integer hanmmingO2 = o2.hamming() + move;
             return hanmmingO1.compareTo(hanmmingO2);
@@ -165,7 +162,7 @@ public class Solver {
     private class TwinHammingComparator implements Comparator<Board> {
         @Override
         public int compare(Board o1, Board o2) {
-            int move = Solver.this.twinSolutionMoves.size() -1;
+            int move = Solver.this.twinSolutionMoves.size() - 1;
             Integer hanmmingO1 = o1.hamming() + move;
             Integer hanmmingO2 = o2.hamming() + move;
             return hanmmingO1.compareTo(hanmmingO2);

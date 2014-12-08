@@ -119,7 +119,7 @@ public class KdTree {
             size++;
             return n;
         }
-        if ( x.p.equals(p)){
+        if (x.p.equals(p)) {
             return x;
         }
         if (isHorizontal(direction)) {
@@ -167,7 +167,7 @@ public class KdTree {
 
     private boolean contains(Node x, Point2D p, boolean direction) {
         if (x == null) return false;
-        if (x.p.equals(p) ) return true;
+        if (x.p.equals(p)) return true;
         if (isHorizontal(direction)) {
             Double xY = x.p.y();
             Double pY = p.y();
@@ -186,9 +186,9 @@ public class KdTree {
 
     public Point2D nearest(Point2D p) {
         if (p == null) return null;
-        if (root == null ) return null;
+        if (root == null) return null;
         Double closetDistance = root.p.distanceSquaredTo(p);
-        return nearest(root, p, root.p,closetDistance);
+        return nearest(root, p, root.p, closetDistance);
     }
 
     private Point2D nearest(Node x, Point2D p, Point2D lastNearestP, Double closestDistance) {
@@ -205,22 +205,22 @@ public class KdTree {
         if (x.lb != null) {
             Double rectDistance = x.lb.rect.distanceSquaredTo(p);
             if (rectDistance < closestDistance) {
-                leftNearestP = nearest(x.lb, p, lastNearestP,closestDistance);
+                leftNearestP = nearest(x.lb, p, lastNearestP, closestDistance);
             }
         }
         if (x.rt != null) {
             Double rectDistance = x.rt.rect.distanceSquaredTo(p);
             if (rectDistance < closestDistance) {
-                rightNearestP = nearest(x.rt, p, lastNearestP,closestDistance);
+                rightNearestP = nearest(x.rt, p, lastNearestP, closestDistance);
             }
         }
         Double leftClosetDistance = leftNearestP == null ? Double.MAX_VALUE : p.distanceSquaredTo(leftNearestP);
         Double rightClosetDistance = rightNearestP == null ? Double.MAX_VALUE : p.distanceSquaredTo(rightNearestP);
-        if( leftClosetDistance <  closestDistance ){
+        if (leftClosetDistance < closestDistance) {
             closestDistance = leftClosetDistance;
             lastNearestP = leftNearestP;
         }
-        if( rightClosetDistance < closestDistance ){
+        if (rightClosetDistance < closestDistance) {
             closestDistance = rightClosetDistance;
             lastNearestP = rightNearestP;
         }

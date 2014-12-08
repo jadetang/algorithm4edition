@@ -45,7 +45,7 @@ public class WordNet {
     }
 
     public int distance(String nounA, String nounB) {
-        if(!isNoun(nounA) || !isNoun(nounB)){
+        if (!isNoun(nounA) || !isNoun(nounB)) {
             throw new IllegalArgumentException("not a noun");
         }
         SAP sap = new SAP(digraph);

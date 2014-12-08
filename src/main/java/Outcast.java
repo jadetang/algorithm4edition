@@ -16,24 +16,25 @@ public class Outcast {
         for (int i = 0; i < nouns.length; i++) {
             int tempOutCast = 0;
             for (int j = 0; j < nouns.length; j++) {
-                int tempDistance = wordNet.distance(nouns[i],nouns[j]);
+                int tempDistance = wordNet.distance(nouns[i], nouns[j]);
                 /*if( tempDistance != -1 ){
                     tempOutCast += tempDistance;
                 }*/
 
                 tempOutCast += tempDistance;
             }
-            if(tempOutCast>outcast){
-                outcast  = tempOutCast;
+            if (tempOutCast > outcast) {
+                outcast = tempOutCast;
                 outCastString = nouns[i];
             }
         }
         assert outCastString != null;
         return outCastString;
     }
+
     public static void main(String[] args) {
         for (int i = 0; i < args.length; i++) {
-            args[i] = "wordnet/"+args[i];
+            args[i] = "wordnet/" + args[i];
         }
         WordNet wordnet = new WordNet(args[0], args[1]);
         Outcast outcast = new Outcast(wordnet);
